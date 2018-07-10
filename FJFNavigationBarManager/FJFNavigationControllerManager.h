@@ -13,7 +13,7 @@
 + (instancetype)sharedInstance;
 
 /**
- 设置 navigationController 遵循UINavigationControllerDelegate代理
+ 设置 navigationController 的UINavigationControllerDelegate代理 为FJFNavigationControllerManager 单例
  
  @param navigationController 遵循UINavigationControllerDelegate代理的 navigationController
  */
