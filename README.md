@@ -1,14 +1,19 @@
 # FJFNavigationBarManager
 
+### 简书链接:[iOS 导航栏管理器(FJFNavigationBarManager)](https://www.jianshu.com/p/9eab6f57803e)
+
 # 一. 前言
+
 我们`产品需求`中很经常会碰到`某个界面`是需要`隐藏导航栏`或者`自定义导航栏`，但是跳转到`下个界面`又需要`显示导航栏`，更有甚者，比如说`当前界面`是需要`隐藏导航栏`的，`这个界面`可以跳转到`其他十来个界面`，其中有`一半的界面`是需要`隐藏导航栏`，`一半`是需要`显示导航栏`的，这样`导航栏处理`起来就很麻烦，尤其是`手势滑动`返回的`动画`可能会出现问题。
 
 **举个🌰 :**
+
 - 当前`发现界面`是`隐藏导航栏`，
 - 同时`发现界面`可以跳转到`店铺界面`和`我的界面`
 - `店铺界面`是显示`导航栏`，而`我的界面`是`隐藏导航栏`
 
 **代码展示:**
+
 ```
 #import "FJShopViewController.h"
 #import "FJProfileViewController.h"
@@ -64,9 +69,11 @@ tmpVc.hidesBottomBarWhenPushed = YES;
 }
 ```
 **效果展示:**
+
 ![FJFNavigationBarManager-NoManager.gif](https://upload-images.jianshu.io/upload_images/2252551-a182d535a4b265e6.gif?imageMogr2/auto-orient/strip)
 
 **我们可以看到:尽管我们在`发现界面`的`viewWillAppear`和`viewWillDisappear`做了如下处理**
+
 ```
 - (void)viewWillAppear:(BOOL)animated {
 [self.navigationController setNavigationBarHidden:YES animated:animated];
@@ -76,6 +83,7 @@ tmpVc.hidesBottomBarWhenPushed = YES;
 [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 ```
+
 但是跳转到`我的界面`这时`导航栏`显示还是有问题，尤其是`手势滑动返回`的时候，还是显得不协调。
 这种情况处理起来就相对比较麻烦，因为`我的界面`在`viewWillAppear`和`viewWillDisappear`也做了处理，这就需要`发现界面`和`我的界面`的两者`配合`起来处理才能达到`协调`的目的。
 
@@ -100,6 +108,7 @@ return @[
 # 二.使用介绍
 
 - **使用方法**
+
 A. 首先让`navigationController`设置代理为`[FJFNavigationControllerManager sharedInstance]`
 ```
 /**
@@ -137,6 +146,7 @@ return @[
 
 ```
 - **集成方法:**
+
 ```
 静态：手动将FJFNavigationBarManager文件夹拖入到工程中。
 ```
@@ -153,6 +163,7 @@ return @[
 
 ### 1. 原理简介
 
+
 - `导航栏管理器(FJFNavigationControllerManager)`主要是通过设置`navigationController`的`UINavigationControllerDelegate`代理为`[FJFNavigationControllerManager sharedInstance]单例`
 
 - 然后在代理方法`- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated `内去判断`当前viewController`是否在`需要隐藏的控制器数组(vcNeedsNavBarHiddenNameArray)`中，如果在就`隐藏`，如果不在就`显示`。
@@ -161,28 +172,29 @@ return @[
 如果设置了`隐藏导航栏`，就将`导航栏隐藏标志位`置为`YES`，否则置为`NO`，通过这个`标志位`来判断如果该`navigationController`上的`viewController`不是通过`需要隐藏的控制器数组(vcNeedsNavBarHiddenNameArray)`而是通过自己的方法来`隐藏导航栏`，就会崩溃输出`提示log`。
 
 ### 2. 代码分析:
+
 - **`FJFNavigationControllerManager`的`3`个类方法:**
 
 ```
 + (UINavigationController *)navigationControllerWithViewControllerName:(NSString *)viewControllerName {
-UIViewController *vc = [[NSClassFromString(viewControllerName) alloc] init];
-NSAssert([vc isKindOfClass:[UIViewController class]], @"viewControllerName 必现是 UIViewController");
-UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:vc];
-navController.delegate = (id)[FJFNavigationControllerManager sharedInstance];
-return navController;
+    UIViewController *vc = [[NSClassFromString(viewControllerName) alloc] init];
+    NSAssert([vc isKindOfClass:[UIViewController class]], @"viewControllerName 必现是 UIViewController");
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:vc];
+    navController.delegate = (id)[FJFNavigationControllerManager sharedInstance];
+    return navController;
 }
 
 + (UINavigationController *)navigationControllerWithRootViewController:(UIViewController *)viewController {
-NSAssert([viewController isKindOfClass:[UIViewController class]], @"viewController 必现是 UIViewController");
-UINavigationController *navVc = [[UINavigationController alloc] initWithRootViewController:viewController];
-navVc.delegate = (id)[FJFNavigationControllerManager sharedInstance];
-return navVc;
+    NSAssert([viewController isKindOfClass:[UIViewController class]], @"viewController 必现是 UIViewController");
+    UINavigationController *navVc = [[UINavigationController alloc] initWithRootViewController:viewController];
+    navVc.delegate = (id)[FJFNavigationControllerManager sharedInstance];
+    return navVc;
 }
 
 
 + (void)setNavigationDelegateWithNavigationController:(UINavigationController *)navigationController {
-NSAssert([navigationController isKindOfClass:[UINavigationController class]], @"navigationController 必现是 UINavigationController");
-navigationController.delegate = (id)[FJFNavigationControllerManager sharedInstance];
+    NSAssert([navigationController isKindOfClass:[UINavigationController class]], @"navigationController 必现是 UINavigationController");
+    navigationController.delegate = (id)[FJFNavigationControllerManager sharedInstance];
 }
 ```
 主要用来生成`navigationController`，并设置`UINavigationControllerDelegate`代理为`[FJFNavigationControllerManager sharedInstance]`。
@@ -194,20 +206,20 @@ navigationController.delegate = (id)[FJFNavigationControllerManager sharedInstan
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
 
-[self updateNavigationBarStatusWithNavigationController:navigationController willShowViewController:viewController animated:animated];
+    [self updateNavigationBarStatusWithNavigationController:navigationController willShowViewController:viewController animated:animated];
 }
 
 
 - (void)updateNavigationBarStatusWithNavigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
 #ifdef DEBUG
-[self checkAndThrowExceptionWithNavigationController:navigationController topViewController:viewController];
+    [self checkAndThrowExceptionWithNavigationController:navigationController topViewController:viewController];
 #endif
-[navigationController setNavigationBarHidden:[self shouldNavigationController:navigationController hideNavigationBarOfViewController:viewController]
+    [navigationController setNavigationBarHidden:[self shouldNavigationController:navigationController hideNavigationBarOfViewController:viewController]
 animated:animated];
-viewController.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:(UIBarButtonItemStylePlain) target:nil action:nil];
+    viewController.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:(UIBarButtonItemStylePlain) target:nil action:nil];
 
 #ifdef DEBUG
-[navigationController fjf_resetHasCalledSetNavigationBarHiddenFlag]; //重置hidden flag
+    [navigationController fjf_resetHasCalledSetNavigationBarHiddenFlag]; //重置hidden flag
 #endif
 }
 ```
@@ -295,6 +307,7 @@ dispatch_once(&onceToken, ^{
 ```
 
 # 四. 总结
+
 综上所述就是`FJFNavigationBarManager`这个`导航栏管理器`的一个`设计思路`，`核心代码量`也就`一百来行`，只需配置下需要隐藏的界面名称，简单易用
 
 ![image.png](https://upload-images.jianshu.io/upload_images/2252551-320ab4a4c8d5b5cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
