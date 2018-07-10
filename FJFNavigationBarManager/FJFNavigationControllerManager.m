@@ -26,19 +26,27 @@
     return sharedInstance;
 }
 
-+ (UINavigationController *)navigationControllerWithRootViewController:(id)viewController {
-    
++ (UINavigationController *)navigationControllerWithViewControllerName:(NSString *)viewControllerName {
+    UIViewController *vc = [[NSClassFromString(viewControllerName) alloc] init];
+    NSAssert([vc isKindOfClass:[UIViewController class]], @"viewControllerName 必现是 UIViewController");
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:vc];
+    navController.delegate = (id)[FJFNavigationControllerManager sharedInstance];
+    return navController;
+}
+
++ (UINavigationController *)navigationControllerWithRootViewController:(UIViewController *)viewController {
+    NSAssert([viewController isKindOfClass:[UIViewController class]], @"viewController 必现是 UIViewController");
     UINavigationController *navVc = [[UINavigationController alloc] initWithRootViewController:viewController];
     navVc.delegate = (id)[FJFNavigationControllerManager sharedInstance];
     return navVc;
 }
 
-+ (UINavigationController *)navigationControllerWithViewControllerName:(NSString *)vcName {
-    UIViewController *vc = [[NSClassFromString(vcName) alloc] init];
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:vc];
-    navController.delegate = (id)[FJFNavigationControllerManager sharedInstance];
-    return navController;
+
++ (void)setNavigationDelegateWithNavigationController:(UINavigationController *)navigationController {
+     NSAssert([navigationController isKindOfClass:[UINavigationController class]], @"navigationController 必现是 UINavigationController");
+    navigationController.delegate = (id)[FJFNavigationControllerManager sharedInstance];
 }
+
 
 - (void)checkNavigationBarHiddenFlagWhenWillDisapperNavigationController:(UINavigationController *)navigationController {
     

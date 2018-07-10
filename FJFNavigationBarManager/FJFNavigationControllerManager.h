@@ -12,8 +12,27 @@
 
 + (instancetype)sharedInstance;
 
-+ (UINavigationController *)navigationControllerWithRootViewController:(id)viewController;
-+ (UINavigationController *)navigationControllerWithViewControllerName:(NSString *)vcName;
+/**
+ 生成 navigationController 并 设置 代理 为FJFNavigationControllerManager 单例
+ 
+ @param viewControllerName 根界面名称
+ @return 生成 navigationController
+ */
++ (UINavigationController *)navigationControllerWithViewControllerName:(NSString *)viewControllerName;
+/**
+ 生成 navigationController 并 设置 代理 为FJFNavigationControllerManager 单例
+
+ @param viewController 根界面
+ @return 生成 navigationController
+ */
++ (UINavigationController *)navigationControllerWithRootViewController:(UIViewController *)viewController;
+
+/**
+ 设置 navigationController 遵循代理
+
+ @param navigationController 遵循代理的 navigationController
+ */
++ (void)setNavigationDelegateWithNavigationController:(UINavigationController *)navigationController;
 
 - (void)checkNavigationBarHiddenFlagWhenWillDisapperNavigationController:(UINavigationController *)navigationController;
 

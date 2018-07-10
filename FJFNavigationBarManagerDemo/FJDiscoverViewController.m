@@ -32,7 +32,7 @@
     
     
     UIButton *secondBtn = [[UIButton alloc] initWithFrame:CGRectMake(100, 250, 200, 100)];
-    [secondBtn setTitle:@"我的界面" forState:UIControlStateNormal];
+    [secondBtn setTitle:@"进入我的界面" forState:UIControlStateNormal];
     [secondBtn addTarget:self action:@selector(secondButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     secondBtn.backgroundColor = [UIColor colorWithRed:arc4random_uniform(256.0)/256.0f green:arc4random_uniform(256)/256.0f blue:arc4random_uniform(256)/256.0f alpha:1.0f];
     [self.view addSubview:secondBtn];
