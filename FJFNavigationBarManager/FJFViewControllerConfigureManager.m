@@ -13,7 +13,8 @@
 /*************    ⚡️⚡️⚡️ 此处为需要隐藏导航栏的控制器 ⚡️⚡️⚡️      *************/
 + (NSArray<NSString *> *)vcNeedsNavBarHiddenNameArray {
     return @[
-             @"FJCourseViewController",
+             @"FJDiscoverViewController",
+             @"FJProfileViewController",
             ];
 }
 
