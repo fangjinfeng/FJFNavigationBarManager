@@ -1,8 +1,8 @@
 //
 //  ViewController.m
-//  FJFNavigationBarManagerDemo
+//  MOANavigationBarManager
 //
-//  Created by fjf on 2018/7/9.
+//  Created by fjf on 2018/6/5.
 //  Copyright © 2018年 fjf. All rights reserved.
 //
 

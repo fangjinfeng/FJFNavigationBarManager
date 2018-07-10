@@ -2,8 +2,8 @@
 //  LYNavigationControllerManager.h
 //  LeyinIntelligence
 //
-//  Created by xianjb on 2017/9/22.
-//  Copyright © 2017年 Leyin. All rights reserved.
+//  Created by fjf on 2018/6/5.
+//  Copyright © 2018年 fjf. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

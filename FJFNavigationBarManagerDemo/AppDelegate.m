@@ -1,12 +1,14 @@
 //
 //  AppDelegate.m
-//  FJFNavigationBarManagerDemo
+//  MOANavigationBarManager
 //
-//  Created by fjf on 2018/7/9.
+//  Created by fjf on 2018/6/5.
 //  Copyright © 2018年 fjf. All rights reserved.
 //
 
 #import "AppDelegate.h"
+#import "FJTabbarViewController.h"
+
 
 @interface AppDelegate ()
 
@@ -17,6 +19,40 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    
+    NSArray *viewControllerArray = [NSArray arrayWithObjects:
+                                    @"FJCourseViewController",
+                                    @"FJDiscoverViewController",
+                                    @"FJShopViewController",
+                                    @"FJProfileViewController",
+                                    nil];
+    
+    NSArray *imageNameArray = [NSArray arrayWithObjects:
+                               @"tab_jingxuan_hui.png",
+                               @"tab_faxian_hui.png",
+                               @"tab_dianpu_hui.png",
+                               @"tab_wode_hui.png",
+                               nil];
+    
+    NSArray *selectedImageNameArray = [NSArray arrayWithObjects:
+                                       @"tab_jingxuan_xuanzhong.png",
+                                       @"tab_faxian_xuanzhong.png",
+                                       @"tab_dianpu_xuanzhong.png",
+                                       @"tab_wode_xuanzhong.png",
+                                       nil];
+    
+    NSArray *titleArray = [NSArray arrayWithObjects:
+                           @"精选",
+                           @"发现",
+                           @"店铺",
+                           @"我的",
+                           nil];
+    
+    FJTabbarViewController *tabbarViewController = [[FJTabbarViewController alloc] initWithViewControllerArray:viewControllerArray imageNameArray:imageNameArray selectedImageNameArray:selectedImageNameArray titleArray:titleArray];;
+    self.window.rootViewController = tabbarViewController;
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
     return YES;
 }
 

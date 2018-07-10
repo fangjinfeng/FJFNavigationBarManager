@@ -2,8 +2,8 @@
 //  UINavigationController+HasCalledTheMethod.m
 //  MicroShopMerchant
 //
-//  Created by xianjb on 2017/8/3.
-//  Copyright © 2017年 admin. All rights reserved.
+//  Created by fjf on 2018/6/5.
+//  Copyright © 2018年 fjf. All rights reserved.
 //
 
 #import "UINavigationController+HasCalledTheMethod.h"
@@ -14,16 +14,17 @@ static void *hasSetNavigationBarHiddenKey = &hasSetNavigationBarHiddenKey;
 
 @implementation UINavigationController (HasCalledTheMethod)
 
-#ifdef DEBUG
 
+#pragma mark -------------------------- Life  Circle
 + (void)load {
     
+#ifdef DEBUG
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         
         Class selfClass = [self class];
         SEL originalSelector = @selector(setNavigationBarHidden:animated:);
-        SEL swizzledSelector = @selector(msHasCalledTheMethod_setNavigationBarHidden:animated:);
+        SEL swizzledSelector = @selector(fjf_hasCalledTheMethod_setNavigationBarHidden:animated:);
         Method originalMethod = class_getInstanceMethod(selfClass, originalSelector);
         Method swizzledMethod = class_getInstanceMethod(selfClass, swizzledSelector);
         BOOL didAddMethod = class_addMethod(selfClass,
@@ -40,22 +41,24 @@ static void *hasSetNavigationBarHiddenKey = &hasSetNavigationBarHiddenKey;
         }
     
     });
+#endif
 }
 
 
-- (void)msHasCalledTheMethod_setNavigationBarHidden:(BOOL)hidden animated:(BOOL)animated {
+#pragma mark -------------------------- Public  Methods
+- (void)fjf_hasCalledTheMethod_setNavigationBarHidden:(BOOL)hidden animated:(BOOL)animated {
     objc_setAssociatedObject(self, &hasSetNavigationBarHiddenKey, @(YES), OBJC_ASSOCIATION_ASSIGN);
-    [self msHasCalledTheMethod_setNavigationBarHidden:hidden animated:animated];
+    [self fjf_hasCalledTheMethod_setNavigationBarHidden:hidden animated:animated];
 }
 
-- (void)resetHasCalledSetNavigationBarHiddenFlag {
+- (void)fjf_resetHasCalledSetNavigationBarHiddenFlag {
     objc_setAssociatedObject(self, &hasSetNavigationBarHiddenKey, @(NO), OBJC_ASSOCIATION_ASSIGN);
 }
 
-- (BOOL)hasCalledSetNavigationBarHidden {
+- (BOOL)fjf_hasCalledSetNavigationBarHidden {
     return [objc_getAssociatedObject(self, hasSetNavigationBarHiddenKey) boolValue];
 }
 
-#endif
+
 
 @end

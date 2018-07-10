@@ -14,7 +14,7 @@
 + (NSArray<NSString *> *)vcNeedsNavBarHiddenNameArray {
     return @[
              @"FJCourseViewController",
-             ];
+            ];
 }
 
 @end

@@ -1,2 +1,1 @@
 # FJFNavigationBarManager
-# FJFNavigationBarManager

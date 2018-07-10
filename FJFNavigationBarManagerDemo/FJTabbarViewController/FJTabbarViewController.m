@@ -10,7 +10,7 @@
 #import "FJTabbarDefine.h"
 #import "FJTabbarViewStyle.h"
 #import "FJTabbarViewController.h"
-#import "MOANavigationControllerManager.h"
+#import "FJFNavigationControllerManager.h"
 
 @interface FJTabbarViewController ()<FJTabBarViewDelegate>
 // itmes array
@@ -88,7 +88,7 @@
     [self.itemArray addObject:vc.tabBarItem];
     
     //添加导航控制器
-    UINavigationController *nav = [MOANavigationControllerManager navigationControllerWithRootViewController:vc];
+    UINavigationController *nav = [FJFNavigationControllerManager navigationControllerWithRootViewController:vc];
     [self addChildViewController:nav];
     
 }

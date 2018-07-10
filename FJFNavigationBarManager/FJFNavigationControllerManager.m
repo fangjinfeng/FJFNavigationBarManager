@@ -2,27 +2,18 @@
 //  LYNavigationControllerManager.m
 //  LeyinIntelligence
 //
-//  Created by xianjb on 2017/9/22.
-//  Copyright © 2017年 Leyin. All rights reserved.
+//  Created by fjf on 2018/6/5.
+//  Copyright © 2018年 fjf. All rights reserved.
 //
 
 // tool
 #import "FJFNavigationControllerManager.h"
-#import "MOAViewControllerConfigureManager.h"
+#import "FJFViewControllerConfigureManager.h"
 // category®
 #import "UINavigationController+HasCalledTheMethod.h"
 
 
 @implementation FJFNavigationControllerManager
-
-#pragma mark -------------------------- Life  Circle
-
-+ (void)load {
-    [super load];
-    
-    [FJFNavigationControllerManager sharedInstance];
-}
-
 
 #pragma mark -------------------------- Private  Methods
 
@@ -71,14 +62,14 @@
     viewController.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:(UIBarButtonItemStylePlain) target:nil action:nil];
     
 #ifdef DEBUG
-    [navigationController resetHasCalledSetNavigationBarHiddenFlag]; //重置hidden flag
+    [navigationController fjf_resetHasCalledSetNavigationBarHiddenFlag]; //重置hidden flag
 #endif
 }
 
 #pragma mark - Private Methods
 
 - (BOOL)shouldNavigationController:(UINavigationController *)navigationController hideNavigationBarOfViewController:(UIViewController *)viewController {
-    for (NSString *vcName in [MOAViewControllerConfigureManager vcNeedsNavBarHiddenNameArray]) {
+    for (NSString *vcName in [FJFViewControllerConfigureManager vcNeedsNavBarHiddenNameArray]) {
         if ([vcName isEqualToString:NSStringFromClass([viewController class])]) {
             return YES;
         }
@@ -90,7 +81,7 @@
 - (void)checkAndThrowExceptionWithNavigationController:(UINavigationController *)navigationController topViewController:(UIViewController *)viewController {
     
 #ifdef DEBUG
-    if ([navigationController hasCalledSetNavigationBarHidden]) {
+    if ([navigationController fjf_hasCalledSetNavigationBarHidden]) {
         NSString *tips = [NSString stringWithFormat:@"\n\n\n\n************************************************************\n  统一在此处实现导航栏的隐藏，禁止在该系列的navigationController的\n\n  *** %@ ***\n\n  控制器中设置setNavigationBarHidden\n************************************************************\n\n\n\n", viewController];
         NSLog(@"%@", tips);
         NSAssert(NO, tips);

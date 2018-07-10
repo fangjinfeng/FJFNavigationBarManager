@@ -2,19 +2,15 @@
 //  UINavigationController+HasCalledTheMethod.h
 //  MicroShopMerchant
 //
-//  Created by xianjb on 2017/8/3.
-//  Copyright © 2017年 admin. All rights reserved.
+//  Created by fjf on 2018/6/5.
+//  Copyright © 2018年 fjf. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
 @interface UINavigationController (HasCalledTheMethod)
 
-#ifdef DEBUG
-
-- (BOOL)hasCalledSetNavigationBarHidden;
-- (void)resetHasCalledSetNavigationBarHiddenFlag;
-
-#endif
+- (BOOL)fjf_hasCalledSetNavigationBarHidden;
+- (void)fjf_resetHasCalledSetNavigationBarHiddenFlag;
 
 @end
